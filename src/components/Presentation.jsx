@@ -8,7 +8,7 @@ const SLIDES = [
     subtitle: "Autonomous Agent Architecture",
     content: "An AI agent. A job. A set of constraints.",
     timeStart: 0,
-    timeEnd: 30,
+    timeEnd: 14.568,
   },
   {
     id: 2,
@@ -20,8 +20,8 @@ const SLIDES = [
       "Most infrastructure assumes interaction",
       "Autonomous agents need different architecture"
     ],
-    timeStart: 30,
-    timeEnd: 90,
+    timeStart: 14.568,
+    timeEnd: 49.032,
   },
   {
     id: 3,
@@ -34,8 +34,8 @@ const SLIDES = [
       "Long-running background processes",
       "No cloud infrastructure needed"
     ],
-    timeStart: 90,
-    timeEnd: 135,
+    timeStart: 49.032,
+    timeEnd: 76.464,
   },
   {
     id: 4,
@@ -54,8 +54,8 @@ const SLIDES = [
         desc: "Trust ladder: Level 0 (permanent approval) through Level 5 (autonomous)"
       }
     ],
-    timeStart: 135,
-    timeEnd: 225,
+    timeStart: 76.464,
+    timeEnd: 125.592,
   },
   {
     id: 5,
@@ -68,8 +68,8 @@ const SLIDES = [
       "Recent activity",
       "API costs, error rates"
     ],
-    timeStart: 225,
-    timeEnd: 285,
+    timeStart: 125.592,
+    timeEnd: 152.952,
   },
   {
     id: 6,
@@ -82,8 +82,8 @@ const SLIDES = [
       "No decision framework for escalation"
     ],
     lesson: "Building autonomous agents is iterative. Publish what you learn.",
-    timeStart: 285,
-    timeEnd: 345,
+    timeStart: 152.952,
+    timeEnd: 180.576,
   },
   {
     id: 7,
@@ -95,8 +95,8 @@ const SLIDES = [
       "Transparent operations scale; black boxes don't",
       "Agents are colleagues, not replacements"
     ],
-    timeStart: 345,
-    timeEnd: 405,
+    timeStart: 180.576,
+    timeEnd: 193.584,
   },
   {
     id: 8,
@@ -107,8 +107,8 @@ const SLIDES = [
       "Autonomy without boundaries is risky",
       "This is what's possible"
     ],
-    timeStart: 405,
-    timeEnd: 465,
+    timeStart: 193.584,
+    timeEnd: 219.816,
   },
   {
     id: 9,
@@ -127,8 +127,8 @@ const SLIDES = [
         goal: "Reference implementation for autonomous agent architecture"
       }
     ],
-    timeStart: 465,
-    timeEnd: 495,
+    timeStart: 219.816,
+    timeEnd: 231.696,
   },
   {
     id: 10,
@@ -139,16 +139,16 @@ const SLIDES = [
       "Published and open source",
       "For anyone building in this space"
     ],
-    timeStart: 495,
-    timeEnd: 525,
+    timeStart: 231.696,
+    timeEnd: 243.648,
   },
   {
     id: 11,
     title: "Thank You",
     content: "Everything is open source. Code, templates, playbook coming soon.",
     subtitle: "That's Herold",
-    timeStart: 525,
-    timeEnd: 540,
+    timeStart: 243.648,
+    timeEnd: 250.944,
   },
 ]
 
