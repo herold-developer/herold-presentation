@@ -226,8 +226,11 @@ export default function Presentation() {
     <div className="presentation">
       <audio
         ref={audioRef}
-        src="/audio/harold-presentation.mp3"
+        src="/audio/herold-presentation.mp3"
         onContextMenu={(e) => e.preventDefault()}
+        onError={() => {
+          console.warn('Audio file not found. Generate with: OPENAI_API_KEY=sk-... npm run generate-audio')
+        }}
       />
 
       <div className="slide-container">
