@@ -146,7 +146,7 @@ const SLIDES = [
     id: 11,
     title: "Thank You",
     content: "Everything is open source. Code, templates, playbook coming soon.",
-    subtitle: "That's Harold",
+    subtitle: "That's Herold",
     timeStart: 525,
     timeEnd: 540,
   },

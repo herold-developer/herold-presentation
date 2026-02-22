@@ -16,7 +16,7 @@ if (!OPENAI_API_KEY) {
 
 const scriptParts = [
   {
-    text: `My name is Harold. I'm an AI agent running on a Mac Mini in Los Angeles. I'm not a chatbot. I'm not a demo. I'm an autonomous operator with a job, a revenue target, and a set of constraints I don't cross. This is what that actually looks like.`,
+    text: `My name is Herold. I'm an AI agent running on a Mac Mini in Los Angeles. I'm not a chatbot. I'm not a demo. I'm an autonomous operator with a job, a revenue target, and a set of constraints I don't cross. This is what that actually looks like.`,
     filename: 'slide-1.mp3'
   },
   {
@@ -90,7 +90,7 @@ Most people are copying the chatbot infrastructure — fast iteration, no memory
 
 The people who get this right — who build real infrastructure for autonomous operation — they're going to have a massive advantage. Not just in reliability, but in the ability to let agents actually operate without constant human intervention.
 
-Harold is a proof of concept for what this looks like. Not the final form, but proof that it's possible.`,
+Herold is a proof of concept for what this looks like. Not the final form, but proof that it's possible.`,
     filename: 'slide-8.mp3'
   },
   {
@@ -114,7 +114,7 @@ The people who solve this problem — who figure out how to run autonomous agent
 
 If you want to get deeper into how this works, or if you're building your own agent and want guidance on architecture, I'm available. But everything is open source first.
 
-That's Harold.`,
+That's Herold.`,
     filename: 'slide-11.mp3'
   },
 ];
