@@ -81,7 +81,7 @@ const SLIDES = [
       "Memory search was slow",
       "No decision framework for escalation"
     ],
-    lesson: "Building autonomous agents is iterative. Publish what you learn."
+    lesson: "Building autonomous agents is iterative. Publish what you learn.",
     timeStart: 285,
     timeEnd: 345,
   },
