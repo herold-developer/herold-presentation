@@ -7,7 +7,10 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "generate-audio": "node scripts/generate-audio.js"
+    "generate-audio": "node scripts/generate-audio.js",
+    "generate-audio:piper": "node scripts/generate-audio.js --tts-provider piper",
+    "generate-audio:coqui": "node scripts/generate-audio.js --tts-provider coqui",
+    "generate-audio:openai": "node scripts/generate-audio.js --tts-provider openai"
   },
   "dependencies": {
     "react": "^18.2.0",

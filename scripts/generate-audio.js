@@ -3,17 +3,36 @@
 import fs from 'fs';
 import path from 'path';
 import https from 'https';
+import { execSync } from 'child_process';
 
-// NOTE: This script requires OPENAI_API_KEY environment variable
-// Run: OPENAI_API_KEY=sk-... npm run generate-audio
+// TTS Provider Configuration
+const TTS_CONFIG = {
+  piper: {
+    name: 'Piper',
+    type: 'local',
+  },
+  coqui: {
+    name: 'Coqui TTS',
+    type: 'local',
+  },
+  openai: {
+    name: 'OpenAI',
+    type: 'cloud',
+  },
+};
 
-const OPENAI_API_KEY = process.env.OPENAI_API_KEY;
-if (!OPENAI_API_KEY) {
-  console.error('ERROR: OPENAI_API_KEY environment variable not set');
-  console.error('Usage: OPENAI_API_KEY=sk-... npm run generate-audio');
-  process.exit(1);
-}
+// ============================================================================
+// CONFIGURATION
+// ============================================================================
 
+// Default voice for each provider
+const DEFAULT_VOICES = {
+  piper: 'en_US-lessac-medium',
+  coqui: 'glow-tts',
+  openai: 'onyx',
+};
+
+// Herold presentation narration
 const scriptParts = [
   {
     text: `My name is Herold. I'm an AI agent running on a Mac Mini in Los Angeles. I'm not a chatbot. I'm not a demo. I'm an autonomous operator with a job, a revenue target, and a set of constraints I don't cross. This is what that actually looks like.`,
@@ -97,22 +116,211 @@ const scriptParts = [
   },
 ];
 
-const audioDir = path.join(path.dirname(import.meta.url.replace('file://', '')), '..', 'public', 'audio');
+// ============================================================================
+// CLI ARGUMENT PARSING
+// ============================================================================
 
-if (!fs.existsSync(audioDir)) {
-  fs.mkdirSync(audioDir, { recursive: true });
+let requestedProvider = null;
+let voice = null;
+
+for (let i = 2; i < process.argv.length; i++) {
+  const arg = process.argv[i];
+  if (arg === '--tts-provider' && i + 1 < process.argv.length) {
+    requestedProvider = process.argv[i + 1].toLowerCase();
+    i++;
+  } else if (arg === '--voice' && i + 1 < process.argv.length) {
+    voice = process.argv[i + 1];
+    i++;
+  }
 }
 
-async function generateAudio(text, filename) {
-  console.log(`Generating ${filename}...`);
+// ============================================================================
+// PROVIDER DETECTION
+// ============================================================================
+
+/**
+ * Check if a TTS provider is available on the system
+ */
+function checkProviderAvailable(provider) {
+  try {
+    switch (provider) {
+      case 'piper':
+        execSync('which piper > /dev/null 2>&1 || (command -v piper && true)', {
+          stdio: 'pipe',
+          shell: true,
+        });
+        return true;
+      case 'coqui':
+        execSync('python -c "import TTS" 2>/dev/null', {
+          stdio: 'pipe',
+        });
+        return true;
+      case 'openai':
+        return !!process.env.OPENAI_API_KEY;
+      default:
+        return false;
+    }
+  } catch (err) {
+    return false;
+  }
+}
+
+/**
+ * Get the provider to use based on availability and preference
+ */
+function getProviderToUse(requested) {
+  const providers = ['piper', 'coqui', 'openai'];
+
+  // If user requested a specific provider
+  if (requested) {
+    if (!providers.includes(requested)) {
+      console.error(`❌ Unknown provider: ${requested}`);
+      console.error(`   Available: ${providers.join(', ')}`);
+      process.exit(1);
+    }
+
+    if (!checkProviderAvailable(requested)) {
+      console.error(`❌ Requested provider '${requested}' is not available`);
+      console.error(`   Please install it or use another provider`);
+      process.exit(1);
+    }
+
+    return requested;
+  }
+
+  // Auto-detect: prefer local providers (Piper, Coqui) then fall back to OpenAI
+  for (const provider of providers) {
+    if (checkProviderAvailable(provider)) {
+      return provider;
+    }
+  }
+
+  console.error('❌ No TTS provider available!');
+  console.error('   Please install one of:');
+  console.error('   - Piper: pip install piper-tts');
+  console.error('   - Coqui: pip install TTS');
+  console.error('   - OpenAI: Set OPENAI_API_KEY environment variable');
+  process.exit(1);
+}
+
+// ============================================================================
+// TTS IMPLEMENTATIONS
+// ============================================================================
+
+/**
+ * Generate audio using Piper TTS
+ */
+async function generateWithPiper(text, filename, voiceId) {
+  return new Promise((resolve, reject) => {
+    try {
+      const audioDir = path.join(
+        path.dirname(import.meta.url.replace('file://', '')),
+        '..',
+        'public',
+        'audio'
+      );
+
+      if (!fs.existsSync(audioDir)) {
+        fs.mkdirSync(audioDir, { recursive: true });
+      }
+
+      const filepath = path.join(audioDir, filename);
+
+      // Use Piper to generate audio
+      const voiceDir = path.join(process.env.HOME, '.local', 'piper-voices');
+      const modelPath = path.join(voiceDir, `${voiceId}.onnx`);
+      const configPath = path.join(voiceDir, `${voiceId}.onnx.json`);
+      
+      // Check if model files exist
+      if (!fs.existsSync(modelPath)) {
+        throw new Error(`Piper model not found at ${modelPath}. Download with instructions in README.md`);
+      }
+      
+      const piper = execSync(
+        `echo "${text.replace(/"/g, '\\"')}" | piper -m ${modelPath} -c ${configPath} -f ${filepath}`,
+        {
+          stdio: 'pipe',
+          encoding: 'utf-8',
+        }
+      );
+
+      console.log(`✓ ${filename} (Piper)`);
+      resolve();
+    } catch (err) {
+      reject(new Error(`Piper generation failed: ${err.message}`));
+    }
+  });
+}
+
+/**
+ * Generate audio using Coqui TTS
+ */
+async function generateWithCoqui(text, filename, modelId) {
+  return new Promise((resolve, reject) => {
+    try {
+      const audioDir = path.join(
+        path.dirname(import.meta.url.replace('file://', '')),
+        '..',
+        'public',
+        'audio'
+      );
+
+      if (!fs.existsSync(audioDir)) {
+        fs.mkdirSync(audioDir, { recursive: true });
+      }
+
+      const filepath = path.join(audioDir, filename);
+
+      // Use Coqui TTS to generate audio
+      const cmd = `python -c "
+from TTS.api import TTS
+import os
+
+tts = TTS(model_name='${modelId}', progress_bar=False, gpu=False)
+tts.tts_to_file(text='${text.replace(/"/g, '\\"')}', file_path='${filepath}')
+"`;
+
+      execSync(cmd, { stdio: 'pipe', shell: '/bin/bash' });
+
+      console.log(`✓ ${filename} (Coqui)`);
+      resolve();
+    } catch (err) {
+      reject(
+        new Error(`Coqui generation failed: ${err.message.substring(0, 100)}`)
+      );
+    }
+  });
+}
+
+/**
+ * Generate audio using OpenAI TTS
+ */
+async function generateWithOpenAI(text, filename, voiceId) {
+  const OPENAI_API_KEY = process.env.OPENAI_API_KEY;
+
+  if (!OPENAI_API_KEY) {
+    return Promise.reject(
+      new Error('OPENAI_API_KEY environment variable not set')
+    );
+  }
 
   return new Promise((resolve, reject) => {
-    // Properly escape special characters
+    const audioDir = path.join(
+      path.dirname(import.meta.url.replace('file://', '')),
+      '..',
+      'public',
+      'audio'
+    );
+
+    if (!fs.existsSync(audioDir)) {
+      fs.mkdirSync(audioDir, { recursive: true });
+    }
+
     const cleanText = text.replace(/[—–]/g, '-').replace(/"/g, '\\"');
     const data = JSON.stringify({
       model: 'tts-1',
       input: cleanText,
-      voice: 'nova',
+      voice: voiceId,
     });
 
     const options = {
@@ -143,21 +351,16 @@ async function generateAudio(text, filename) {
           const buffer = Buffer.concat(audioData);
           const filepath = path.join(audioDir, filename);
           fs.writeFileSync(filepath, buffer);
-          console.log(`✓ ${filename}`);
+          console.log(`✓ ${filename} (OpenAI)`);
           resolve();
         } else {
-          console.error(`✗ ${filename}: HTTP ${res.statusCode}`);
-          if (errorData) {
-            console.error(`  Error: ${errorData.substring(0, 100)}`);
-          }
-          reject(new Error(`HTTP ${res.statusCode}`));
+          reject(new Error(`HTTP ${res.statusCode}: ${errorData.substring(0, 100)}`));
         }
       });
     });
 
     req.on('error', (e) => {
-      console.error(`✗ ${filename}: ${e.message}`);
-      reject(e);
+      reject(new Error(`OpenAI request failed: ${e.message}`));
     });
 
     req.write(data);
@@ -165,24 +368,66 @@ async function generateAudio(text, filename) {
   });
 }
 
+// ============================================================================
+// MAIN
+// ============================================================================
+
+async function generateAudio(text, filename, provider, voiceId) {
+  try {
+    switch (provider) {
+      case 'piper':
+        await generateWithPiper(text, filename, voiceId);
+        break;
+      case 'coqui':
+        await generateWithCoqui(text, filename, voiceId);
+        break;
+      case 'openai':
+        await generateWithOpenAI(text, filename, voiceId);
+        break;
+    }
+  } catch (err) {
+    console.error(`✗ ${filename}: ${err.message}`);
+    throw err;
+  }
+}
+
 async function main() {
-  console.log('Generating presentation audio...\n');
+  const provider = getProviderToUse(requestedProvider);
+  const voiceId = voice || DEFAULT_VOICES[provider];
+
+  console.log(`\n🎤 Generating presentation audio with ${TTS_CONFIG[provider].name}...`);
+  console.log(`   Voice: ${voiceId}`);
+  console.log(`\n`);
+
+  const audioDir = path.join(
+    path.dirname(import.meta.url.replace('file://', '')),
+    '..',
+    'public',
+    'audio'
+  );
+
+  if (!fs.existsSync(audioDir)) {
+    fs.mkdirSync(audioDir, { recursive: true });
+  }
 
   try {
     for (const part of scriptParts) {
-      await generateAudio(part.text, part.filename);
-      // Small delay to avoid rate limiting
+      await generateAudio(part.text, part.filename, provider, voiceId);
+      // Small delay to avoid rate limiting (mainly for OpenAI)
       await new Promise(resolve => setTimeout(resolve, 500));
     }
-    
-    console.log('\n✓ All audio generated successfully!');
-    console.log(`Audio files in: ${audioDir}`);
-    console.log('\nNOTE: Individual slide files have been created.');
-    console.log('To use them in the presentation, either:');
-    console.log('  1. Concatenate them: ffmpeg -f concat -safe 0 -i <(for f in public/audio/slide-*.mp3; do echo "file \'$f\'"; done) -c copy public/audio/herold-presentation.mp3');
-    console.log('  2. Or modify Presentation.jsx to load individual files per slide');
+
+    console.log('\n✅ All audio generated successfully!');
+    console.log(`📁 Audio files in: ${audioDir}`);
+    console.log(`🎤 Provider: ${TTS_CONFIG[provider].name}`);
+
+    console.log('\n📋 NEXT STEPS:');
+    console.log('1. If you have FFmpeg installed, concatenate the files:');
+    console.log('   ffmpeg -f concat -safe 0 -i <(for f in public/audio/slide-*.mp3; do echo "file \'$f\'"; done) -c copy public/audio/herold-presentation.mp3');
+    console.log('\n2. Or use a concat file (see README.md for details)');
+    console.log('\n3. Then run: npm run dev');
   } catch (error) {
-    console.error('\n✗ Audio generation failed:', error.message);
+    console.error('\n❌ Audio generation failed:', error.message);
     process.exit(1);
   }
 }

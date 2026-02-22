@@ -4,6 +4,7 @@ An interactive presentation about building autonomous AI agents with persistent 
 
 ## Features
 
+- **Hybrid TTS Support** — Piper (local, fast), Coqui (flexible), OpenAI (premium fallback)
 - **React + Vite** — Fast, modern single-page application
 - **Audio-driven slides** — Narration syncs with slide transitions
 - **Keyboard controls** — Arrow keys or Space to navigate
@@ -36,20 +37,71 @@ npm run preview
 
 ## Audio Generation
 
-The presentation requires a narration audio file. Generate it with:
+The presentation uses **hybrid TTS** — choose your provider based on your needs:
 
+| Provider | Type | Speed | Quality | Offline | Cost |
+|----------|------|-------|---------|---------|------|
+| **Piper** | Local | ⚡ Fast | Good | ✓ Yes | Free |
+| **Coqui** | Local | ⏱️ Medium | Very Good | ✓ Yes | Free |
+| **OpenAI** | Cloud | Instant | Excellent | ✗ No | $0.015/min |
+
+### Quick Start: Generate Audio
+
+**Option 1: Piper (Recommended)**
 ```bash
-OPENAI_API_KEY=sk-... npm run generate-audio
+# Install Piper
+pip install piper-tts
+piper --download en_US-lessac-medium
+
+# Generate audio
+npm run generate-audio:piper
 ```
 
-This generates individual MP3 files for each slide in `public/audio/`. 
+**Option 2: Coqui**
+```bash
+# Install Coqui
+pip install TTS
 
-**Note:** Currently the app expects a single concatenated file at `public/audio/harold-presentation.mp3`. You can:
-1. Concatenate the slide files using `ffmpeg`:
-   ```bash
-   ffmpeg -f concat -safe 0 -i <(for f in public/audio/slide-*.mp3; do echo "file '$f'"; done) -c copy public/audio/harold-presentation.mp3
-   ```
-2. Or modify the code to load individual files per slide
+# Generate audio
+npm run generate-audio:coqui
+```
+
+**Option 3: OpenAI (Premium)**
+```bash
+# Set API key
+export OPENAI_API_KEY=sk-your-key-here
+
+# Generate audio
+npm run generate-audio:openai
+```
+
+**Option 4: Auto-detect (best available)**
+```bash
+npm run generate-audio
+```
+
+The script auto-detects installed providers in this order: Piper → Coqui → OpenAI.
+
+### Post-Generation: Concatenate Files
+
+The generation creates individual slide MP3 files. Concatenate them into a single presentation file:
+
+```bash
+ffmpeg -f concat -safe 0 -i <(for f in public/audio/slide-*.mp3; do echo "file '$f'"; done) -c copy public/audio/herold-presentation.mp3
+```
+
+Or create a `concat.txt` file:
+```
+file 'public/audio/slide-1.mp3'
+file 'public/audio/slide-2a.mp3'
+file 'public/audio/slide-2b.mp3'
+...
+```
+
+Then run:
+```bash
+ffmpeg -f concat -safe 0 -i concat.txt -c copy public/audio/herold-presentation.mp3
+```
 
 ## Presentation Structure
 
