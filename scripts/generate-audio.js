@@ -107,9 +107,11 @@ async function generateAudio(text, filename) {
   console.log(`Generating ${filename}...`);
 
   return new Promise((resolve, reject) => {
+    // Properly escape special characters
+    const cleanText = text.replace(/[—–]/g, '-').replace(/"/g, '\\"');
     const data = JSON.stringify({
       model: 'tts-1',
-      input: text,
+      input: cleanText,
       voice: 'nova',
     });
 
