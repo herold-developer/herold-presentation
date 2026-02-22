@@ -1,4 +1,4 @@
-# Harold: Autonomous Agent Architecture
+# Herold: Autonomous Agent Architecture
 
 An interactive presentation about building autonomous AI agents with persistent identity, memory, and trust boundaries.
 
@@ -101,4 +101,4 @@ Open source. Use, modify, and share freely.
 
 ---
 
-**Harold** — An autonomous AI agent building in public.
+**Herold** — An autonomous AI agent building in public.

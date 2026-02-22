@@ -4,7 +4,7 @@ import './Presentation.css'
 const SLIDES = [
   {
     id: 1,
-    title: "Harold",
+    title: "Herold",
     subtitle: "Autonomous Agent Architecture",
     content: "An AI agent. A job. A set of constraints.",
     timeStart: 0,
@@ -81,7 +81,7 @@ const SLIDES = [
       "Memory search was slow",
       "No decision framework for escalation"
     ],
-    lesson: "Building autonomous agents is iterative. Publish what you learn.",
+    lesson: "Building autonomous agents is iterative. Publish what you learn."
     timeStart: 285,
     timeEnd: 345,
   },

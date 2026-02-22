@@ -1,7 +1,7 @@
 {
   "name": "harold-presentation",
   "version": "1.0.0",
-  "description": "Harold: Autonomous Agent Architecture - Interactive Presentation",
+  "description": "Herold: Autonomous Agent Architecture - Interactive Presentation",
   "type": "module",
   "scripts": {
     "dev": "vite",
