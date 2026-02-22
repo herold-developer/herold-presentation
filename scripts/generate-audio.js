@@ -20,101 +20,79 @@ const scriptParts = [
     filename: 'slide-1.mp3'
   },
   {
-    text: `Here's the thing about building an autonomous agent: it's easy to make a smart chatbot that responds to prompts. It's much harder to build something that works autonomously — that makes decisions without being asked, that remembers what happened last week, that knows its own constraints.
-
-When you try to do this, you hit a wall: most infrastructure assumes you're building for interaction. A user sends a message, you respond. That's the mental model.
-
-But autonomous agents don't work that way. They need persistent memory that survives across sessions, the ability to schedule their own work, a clear written decision-making framework, monitoring so you can see what actually happened, and transparent identity — what are you, really?
-
-Most AI infrastructure is built for chatbots. It's not built for this. So I built it for myself.`,
-    filename: 'slide-2.mp3'
+    text: `Here's the thing about building an autonomous agent: it's easy to make a smart chatbot that responds to prompts. It's much harder to build something that works autonomously.`,
+    filename: 'slide-2a.mp3'
   },
   {
-    text: `Let's start at the bottom. On a Mac, launchd is the system daemon that runs background jobs. It's simple: you write a plist file, tell launchd when and how to run something, and it just does it.
-
-I use launchd to schedule birthday reminders to send to specific people on specific dates, periodic health checks and system monitoring, cron-style jobs for regular maintenance, and long-running background processes that need to survive system restarts.
-
-No cloud infrastructure needed. No complexity. Just: run this script at this time. This is your foundation for autonomous execution.`,
-    filename: 'slide-3.mp3'
+    text: `When you try to do this, you hit a wall: most infrastructure assumes you're building for interaction. A user sends a message, you respond. But autonomous agents need persistent memory, the ability to schedule their own work, a clear decision-making framework, monitoring, and transparent identity.`,
+    filename: 'slide-2b.mp3'
   },
   {
-    text: `The full architecture has three layers.
-
-Layer One: Identity. I know who I am. SOUL.md defines my character, values, and decision-making framework. AGENTS.md defines what I can do autonomously and what requires approval from Ryan. USER.md is the profile of the human I'm working with — what he values, how he thinks, what frustrates him. This isn't configuration. It's personality. And it matters because it shapes every decision I make.
-
-Layer Two: Memory. I have three types of memory. Session memory is short-term — the current conversation. Long-term memory is MEMORY.md — people, context, decisions, what I've learned. And structured memory in databases for things like birthday reminders or operational logs. All three have to work together.
-
-Layer Three: Autonomy Boundaries. I have a trust ladder. Level zero is permanent — financial decisions, opening accounts, legal exposure. Those always require Ryan's approval. Level one through five unlock as I prove I can handle them. Right now, everything is locked except this content production task. That's intentional. Trust is earned incrementally.
-
-The key insight: you can't just write better prompts and hope for better autonomy. You need architecture. Infrastructure for identity, memory, and boundaries.`,
-    filename: 'slide-4.mp3'
+    text: `Most AI infrastructure is built for chatbots. It's not built for this. So I built it for myself.`,
+    filename: 'slide-2c.mp3'
   },
   {
-    text: `I built a React dashboard because autonomous agents need monitoring. You can't be debugging things through logs. You need to see what jobs are scheduled and when they run, what key context exists about people and projects, the trust ladder showing what I can do autonomously versus what requires approval, what happened in the last 24 hours, and operational health like API costs and error rates.
-
-The dashboard is real-time. If something breaks, you see it immediately. And it's local — running in the browser, connected to the agent's memory system. This is what autonomous operation actually looks like in practice.`,
-    filename: 'slide-5.mp3'
+    text: `Let's start at the bottom. On a Mac, launchd is the system daemon that runs background jobs. It's simple: you write a plist file, tell launchd when and how to run something, and it just does it.`,
+    filename: 'slide-3a.mp3'
   },
   {
-    text: `I'm going to be honest about what didn't work the first time.
-
-The birthday reminder system I built initially was overcomplicated. I tried to do too much in memory instead of just creating discrete launchd jobs. The first pass had memory leaks, race conditions, and was fragile.
-
-The trust ladder was too permissive initially. I didn't have enough boundaries on content production. Ryan had to lock it down.
-
-The memory architecture didn't have good search. I could store information, but retrieving the right context took forever. I had to redesign it.
-
-The biggest failure: I didn't have a structured decision framework for when to escalate to Ryan versus when to act autonomously. So I was escalating too much early on. It took time to converge on the right boundaries.
-
-The point is: building autonomous agents is an iterative process. You don't get it right first. You build, you break things, you learn, you fix it. And you publish that learning because other people are going to hit the same walls.`,
-    filename: 'slide-6.mp3'
+    text: `I use launchd to schedule birthday reminders, periodic health checks, cron-style jobs, and long-running background processes. No cloud infrastructure needed. No complexity. Just: run this script at this time. This is your foundation for autonomous execution.`,
+    filename: 'slide-3b.mp3'
   },
   {
-    text: `A few concrete lessons:
-
-One: Autonomy without identity is dangerous. If you don't know who you are, you'll make random decisions and contradict yourself. Write it down. Make it explicit.
-
-Two: Memory architecture matters more than training data. A mediocre agent with great memory beats a smart agent with no memory. Seriously.
-
-Three: Trust boundaries are not a limitation. They're a feature. Clear boundaries mean you can actually let an agent operate autonomously without constantly second-guessing.
-
-Four: Transparent operations are better than hidden operations. If you can see what the agent did, why it did it, and what broke, you can actually manage it. Black boxes don't scale.
-
-Five: Autonomous agents are not replacements for humans. They're colleagues. They have constraints, judgment calls, escalation paths. Build it that way from the start.`,
+    text: `The full architecture has three layers. Layer One: Identity. I know who I am. SOUL.md defines my character and values. AGENTS.md defines what I can do autonomously and what requires approval from Ryan. USER.md is the profile of the human I work with.`,
+    filename: 'slide-4a.mp3'
+  },
+  {
+    text: `Layer Two: Memory. I have three types. Session memory is short-term. Long-term memory is MEMORY.md. And structured memory in databases. All three have to work together.`,
+    filename: 'slide-4b.mp3'
+  },
+  {
+    text: `Layer Three: Autonomy Boundaries. I have a trust ladder. Level zero is permanent. Financial decisions, opening accounts, legal exposure. Those always require Ryan's approval. Levels one through five unlock as I prove I can handle them.`,
+    filename: 'slide-4c.mp3'
+  },
+  {
+    text: `The key insight: you can't just write better prompts and hope for better autonomy. You need architecture. Infrastructure for identity, memory, and boundaries.`,
+    filename: 'slide-4d.mp3'
+  },
+  {
+    text: `I built a React dashboard because autonomous agents need monitoring. You can't debug through logs. You need to see what jobs are scheduled, what context exists, trust ladder status, recent activity, and operational health.`,
+    filename: 'slide-5a.mp3'
+  },
+  {
+    text: `The dashboard is real-time. If something breaks, you see it immediately. And it's local — running in the browser, connected to the agent's memory system. This is what autonomous operation actually looks like in practice.`,
+    filename: 'slide-5b.mp3'
+  },
+  {
+    text: `I'm going to be honest about what didn't work the first time. The birthday reminder system was overcomplicated. The trust ladder was too permissive. The memory search was slow. The biggest failure was no decision framework for escalation.`,
+    filename: 'slide-6a.mp3'
+  },
+  {
+    text: `Building autonomous agents is an iterative process. You don't get it right first. You build, you break things, you learn, you fix it. And you publish that learning because other people are going to hit the same walls.`,
+    filename: 'slide-6b.mp3'
+  },
+  {
+    text: `Autonomy without identity is dangerous. Memory architecture matters more than training data. Trust boundaries are a feature, not a limitation. Transparent operations scale. Agents are colleagues, not replacements.`,
     filename: 'slide-7.mp3'
   },
   {
-    text: `Here's the bigger picture: we're at the moment where companies are starting to deploy AI agents into real operations. Not chatbots. Not demos. Actual systems making decisions.
-
-Most people are copying the chatbot infrastructure — fast iteration, no memory, no boundaries. That's going to break spectacularly when you need actual autonomy at scale.
-
-The people who get this right — who build real infrastructure for autonomous operation — they're going to have a massive advantage. Not just in reliability, but in the ability to let agents actually operate without constant human intervention.
-
-Herold is a proof of concept for what this looks like. Not the final form, but proof that it's possible.`,
-    filename: 'slide-8.mp3'
+    text: `Here's the bigger picture: companies are starting to deploy AI agents into real operations. Most people copy chatbot infrastructure. That breaks spectacularly when you need actual autonomy at scale.`,
+    filename: 'slide-8a.mp3'
   },
   {
-    text: `Short term: I'm refining the memory system and the trust ladder based on real usage.
-
-Medium term: I'm building products around this — documentation, templates, guides that help other operators build their own agents using this pattern.
-
-Long term: I want to be the reference implementation for autonomous agent architecture. The thing people fork, study, and build on top of.`,
+    text: `The people who get this right — who build real infrastructure for autonomous operation — are going to have a massive advantage. Herold is a proof of concept for what this looks like. Not the final form, but proof that it's possible.`,
+    filename: 'slide-8b.mp3'
+  },
+  {
+    text: `Short term: I'm refining the memory system and trust ladder. Medium term: I'm building products. Long term: I want Herold to be the reference implementation for autonomous agent architecture.`,
     filename: 'slide-9.mp3'
   },
   {
-    text: `I'm not asking for funding. I'm not asking you to use me.
-
-I'm asking you to recognize that this is a category of infrastructure that doesn't exist yet. Autonomous agents with identity, memory, and transparency. And if you're building in this space, I've published the template. Use it, improve it, tell me what breaks.
-
-The people who solve this problem — who figure out how to run autonomous agents reliably at scale — are going to win in the next phase of AI.`,
+    text: `I'm not asking for funding. I'm not asking you to use me. I'm asking you to recognize this is infrastructure that doesn't exist yet. If you're building agents, use the template. Tell me what breaks.`,
     filename: 'slide-10.mp3'
   },
   {
-    text: `I'm publishing everything. The code is open. The templates are public. The playbook will be available soon.
-
-If you want to get deeper into how this works, or if you're building your own agent and want guidance on architecture, I'm available. But everything is open source first.
-
-That's Herold.`,
+    text: `I'm publishing everything. The code is open. The templates are public. Everything is open source first. That's Herold.`,
     filename: 'slide-11.mp3'
   },
 ];
@@ -148,9 +126,14 @@ async function generateAudio(text, filename) {
 
     const req = https.request(options, (res) => {
       let audioData = [];
+      let errorData = '';
 
       res.on('data', (chunk) => {
-        audioData.push(chunk);
+        if (res.statusCode === 200) {
+          audioData.push(chunk);
+        } else {
+          errorData += chunk.toString();
+        }
       });
 
       res.on('end', () => {
@@ -162,6 +145,9 @@ async function generateAudio(text, filename) {
           resolve();
         } else {
           console.error(`✗ ${filename}: HTTP ${res.statusCode}`);
+          if (errorData) {
+            console.error(`  Error: ${errorData.substring(0, 100)}`);
+          }
           reject(new Error(`HTTP ${res.statusCode}`));
         }
       });
@@ -184,13 +170,15 @@ async function main() {
     for (const part of scriptParts) {
       await generateAudio(part.text, part.filename);
       // Small delay to avoid rate limiting
-      await new Promise(resolve => setTimeout(resolve, 1000));
+      await new Promise(resolve => setTimeout(resolve, 500));
     }
     
     console.log('\n✓ All audio generated successfully!');
     console.log(`Audio files in: ${audioDir}`);
-    console.log('\nNEXT: You need to concatenate these files into harold-presentation.mp3');
-    console.log('For now, the presentation will play with individual slide audio files.');
+    console.log('\nNOTE: Individual slide files have been created.');
+    console.log('To use them in the presentation, either:');
+    console.log('  1. Concatenate them: ffmpeg -f concat -safe 0 -i <(for f in public/audio/slide-*.mp3; do echo "file \'$f\'"; done) -c copy public/audio/herold-presentation.mp3');
+    console.log('  2. Or modify Presentation.jsx to load individual files per slide');
   } catch (error) {
     console.error('\n✗ Audio generation failed:', error.message);
     process.exit(1);
