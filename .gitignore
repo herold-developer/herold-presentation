@@ -23,7 +23,6 @@ models/
 *.bin
 
 # Concatenated audio file (generated locally for reference)
-public/audio/herold-presentation.mp3
 concat.txt
 .vercel
 .vercel
