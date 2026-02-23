@@ -7,6 +7,10 @@ import { execSync } from 'child_process';
 
 // TTS Provider Configuration
 const TTS_CONFIG = {
+  kokoro: {
+    name: 'Kokoro JS',
+    type: 'local',
+  },
   piper: {
     name: 'Piper',
     type: 'local',
@@ -27,6 +31,7 @@ const TTS_CONFIG = {
 
 // Default voice for each provider
 const DEFAULT_VOICES = {
+  kokoro: 'af_bella',
   piper: 'en_US-lessac-medium',
   coqui: 'glow-tts',
   openai: 'onyx',
@@ -144,6 +149,15 @@ for (let i = 2; i < process.argv.length; i++) {
 function checkProviderAvailable(provider) {
   try {
     switch (provider) {
+      case 'kokoro':
+        try {
+          require.resolve('kokoro-js');
+          // Also check if models are available
+          const modelDir = path.join(process.env.HOME, '.cache', 'kokoro-models');
+          return fs.existsSync(modelDir) && fs.readdirSync(modelDir).length > 0;
+        } catch {
+          return false;
+        }
       case 'piper':
         execSync('which piper > /dev/null 2>&1 || (command -v piper && true)', {
           stdio: 'pipe',
@@ -169,7 +183,7 @@ function checkProviderAvailable(provider) {
  * Get the provider to use based on availability and preference
  */
 function getProviderToUse(requested) {
-  const providers = ['piper', 'coqui', 'openai'];
+  const providers = ['kokoro', 'piper', 'coqui', 'openai'];
 
   // If user requested a specific provider
   if (requested) {
@@ -188,7 +202,7 @@ function getProviderToUse(requested) {
     return requested;
   }
 
-  // Auto-detect: prefer local providers (Piper, Coqui) then fall back to OpenAI
+  // Auto-detect: prefer Kokoro (no API), then Piper, Coqui, then fall back to OpenAI
   for (const provider of providers) {
     if (checkProviderAvailable(provider)) {
       return provider;
@@ -197,6 +211,7 @@ function getProviderToUse(requested) {
 
   console.error('❌ No TTS provider available!');
   console.error('   Please install one of:');
+  console.error('   - Kokoro: npm install kokoro-js && node scripts/download-kokoro-models.js');
   console.error('   - Piper: pip install piper-tts');
   console.error('   - Coqui: pip install TTS');
   console.error('   - OpenAI: Set OPENAI_API_KEY environment variable');
@@ -293,6 +308,44 @@ tts.tts_to_file(text='${text.replace(/"/g, '\\"')}', file_path='${filepath}')
 }
 
 /**
+ * Generate audio using Kokoro JS TTS
+ */
+async function generateWithKokoro(text, filename, voiceId) {
+  return new Promise((resolve, reject) => {
+    try {
+      const Kokoro = require('kokoro-js');
+      const audioDir = path.join(
+        path.dirname(import.meta.url.replace('file://', '')),
+        '..',
+        'public',
+        'audio'
+      );
+
+      if (!fs.existsSync(audioDir)) {
+        fs.mkdirSync(audioDir, { recursive: true });
+      }
+
+      const filepath = path.join(audioDir, filename);
+
+      // Generate audio with Kokoro
+      const kokoro = new Kokoro({
+        modelDir: path.join(process.env.HOME, '.cache', 'kokoro-models'),
+      });
+
+      kokoro.synthesize(text, voiceId).then((audio) => {
+        fs.writeFileSync(filepath, audio);
+        console.log(`✓ ${filename} (Kokoro)`);
+        resolve();
+      }).catch((err) => {
+        reject(new Error(`Kokoro generation failed: ${err.message}`));
+      });
+    } catch (err) {
+      reject(new Error(`Kokoro generation failed: ${err.message}`));
+    }
+  });
+}
+
+/**
  * Generate audio using OpenAI TTS
  */
 async function generateWithOpenAI(text, filename, voiceId) {
@@ -375,6 +428,9 @@ async function generateWithOpenAI(text, filename, voiceId) {
 async function generateAudio(text, filename, provider, voiceId) {
   try {
     switch (provider) {
+      case 'kokoro':
+        await generateWithKokoro(text, filename, voiceId);
+        break;
       case 'piper':
         await generateWithPiper(text, filename, voiceId);
         break;
@@ -422,10 +478,9 @@ async function main() {
     console.log(`🎤 Provider: ${TTS_CONFIG[provider].name}`);
 
     console.log('\n📋 NEXT STEPS:');
-    console.log('1. If you have FFmpeg installed, concatenate the files:');
+    console.log('1. Concatenate audio files:');
     console.log('   ffmpeg -f concat -safe 0 -i <(for f in public/audio/slide-*.mp3; do echo "file \'$f\'"; done) -c copy public/audio/herold-presentation.mp3');
-    console.log('\n2. Or use a concat file (see README.md for details)');
-    console.log('\n3. Then run: npm run dev');
+    console.log('\n2. Then run: npm run dev');
   } catch (error) {
     console.error('\n❌ Audio generation failed:', error.message);
     process.exit(1);

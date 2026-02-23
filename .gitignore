@@ -12,3 +12,12 @@ dist/
 .turbo
 build/
 coverage/
+
+# Model files — too large for git, download separately
+models/
+*.onnx
+*.pth
+*.pt
+*.weights
+*.safetensors
+*.bin

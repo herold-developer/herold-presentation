@@ -4,7 +4,7 @@ An interactive presentation about building autonomous AI agents with persistent 
 
 ## Features
 
-- **Hybrid TTS Support** — Piper (local, fast), Coqui (flexible), OpenAI (premium fallback)
+- **Hybrid TTS Support** — Kokoro JS (local, fast, no keys), Piper (local, good), Coqui (flexible), OpenAI (premium fallback)
 - **React + Vite** — Fast, modern single-page application
 - **Audio-driven slides** — Narration syncs with slide transitions
 - **Keyboard controls** — Arrow keys or Space to navigate
@@ -39,69 +39,77 @@ npm run preview
 
 The presentation uses **hybrid TTS** — choose your provider based on your needs:
 
-| Provider | Type | Speed | Quality | Offline | Cost |
-|----------|------|-------|---------|---------|------|
-| **Piper** | Local | ⚡ Fast | Good | ✓ Yes | Free |
-| **Coqui** | Local | ⏱️ Medium | Very Good | ✓ Yes | Free |
-| **OpenAI** | Cloud | Instant | Excellent | ✗ No | $0.015/min |
+| Provider | Type | Speed | Quality | Offline | Cost | Requires |
+|----------|------|-------|---------|---------|------|----------|
+| **Kokoro JS** | Local | ⚡ Fast | Excellent | ✓ Yes | Free | npm install kokoro-js |
+| **Piper** | Local | ⚡ Fast | Good | ✓ Yes | Free | pip install piper-tts |
+| **Coqui** | Local | ⏱️ Medium | Very Good | ✓ Yes | Free | pip install TTS |
+| **OpenAI** | Cloud | Instant | Excellent | ✗ No | $0.015/min | API key |
 
 ### Quick Start: Generate Audio
 
-**Option 1: Piper (Recommended)**
+**Option 1: Kokoro JS (Recommended — no API keys, pure JS/WASM)**
+```bash
+# Install Kokoro JS
+npm install kokoro-js
+
+# Download models (~500MB)
+node scripts/download-kokoro-models.js
+
+# Generate audio
+npm run generate-audio -- --tts-provider kokoro
+```
+
+**Option 2: Piper (Local, Python-based)**
 ```bash
 # Install Piper
 pip install piper-tts
 piper --download en_US-lessac-medium
 
 # Generate audio
-npm run generate-audio:piper
+npm run generate-audio -- --tts-provider piper
 ```
 
-**Option 2: Coqui**
+**Option 3: Coqui (Local, very good quality)**
 ```bash
 # Install Coqui
 pip install TTS
 
 # Generate audio
-npm run generate-audio:coqui
+npm run generate-audio -- --tts-provider coqui
 ```
 
-**Option 3: OpenAI (Premium)**
+**Option 4: OpenAI (Premium cloud)**
 ```bash
 # Set API key
 export OPENAI_API_KEY=sk-your-key-here
 
 # Generate audio
-npm run generate-audio:openai
+npm run generate-audio -- --tts-provider openai
 ```
 
-**Option 4: Auto-detect (best available)**
+**Auto-detect (uses best available)**
 ```bash
 npm run generate-audio
 ```
 
-The script auto-detects installed providers in this order: Piper → Coqui → OpenAI.
+The script auto-detects installed providers in this order: Kokoro → Piper → Coqui → OpenAI.
 
 ### Post-Generation: Concatenate Files
 
-The generation creates individual slide MP3 files. Concatenate them into a single presentation file:
+The generation creates individual slide MP3 files in `public/audio/`. If you want a single combined file:
 
+```bash
+# Using the provided concat.txt
+ffmpeg -f concat -safe 0 -i concat.txt -c copy public/audio/herold-presentation.mp3
+```
+
+Or generate the list dynamically:
 ```bash
 ffmpeg -f concat -safe 0 -i <(for f in public/audio/slide-*.mp3; do echo "file '$f'"; done) -c copy public/audio/herold-presentation.mp3
 ```
 
-Or create a `concat.txt` file:
-```
-file 'public/audio/slide-1.mp3'
-file 'public/audio/slide-2a.mp3'
-file 'public/audio/slide-2b.mp3'
-...
-```
-
-Then run:
-```bash
-ffmpeg -f concat -safe 0 -i concat.txt -c copy public/audio/herold-presentation.mp3
-```
+Note: Individual files are already loaded by the presentation, so concatenation is optional.
 
 ## Presentation Structure
 
