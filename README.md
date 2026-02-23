@@ -24,9 +24,15 @@ An interactive presentation about building autonomous AI agents with persistent 
 # Install dependencies
 npm install
 
+# Generate audio (see Audio Generation section below)
+export OPENAI_API_KEY=sk-your-key-here
+npm run generate-audio
+
 # Start dev server (opens at http://localhost:3000)
 npm run dev
 ```
+
+**Note:** Audio files must be generated before running the presentation. They are not stored in git.
 
 ### Building for Production
 
@@ -48,47 +54,43 @@ The presentation uses **hybrid TTS** — choose your provider based on your need
 
 ### Quick Start: Generate Audio
 
-**Option 1: Kokoro JS (Recommended — no API keys, pure JS/WASM)**
+**Recommended: OpenAI (Best quality, premium voice)**
+
+Audio files are generated locally — they are **not stored in git**. Generate them on your machine:
+
 ```bash
-# Install Kokoro JS
-npm install kokoro-js
+# Set your OpenAI API key (never commit this)
+export OPENAI_API_KEY=sk-your-key-here
 
-# Download models (~500MB)
-node scripts/download-kokoro-models.js
+# Generate all audio
+npm run generate-audio -- --tts-provider openai
 
-# Generate audio
-npm run generate-audio -- --tts-provider kokoro
+# Audio files will be created in public/audio/
 ```
 
-**Option 2: Piper (Local, Python-based)**
+**Alternative providers** (local, no API key needed):
+
+Piper (good quality):
 ```bash
-# Install Piper
 pip install piper-tts
 piper --download en_US-lessac-medium
-
-# Generate audio
 npm run generate-audio -- --tts-provider piper
 ```
 
-**Option 3: Coqui (Local, very good quality)**
+Coqui (very good quality):
 ```bash
-# Install Coqui
 pip install TTS
-
-# Generate audio
 npm run generate-audio -- --tts-provider coqui
 ```
 
-**Option 4: OpenAI (Premium cloud)**
+Kokoro JS (fast, no API keys):
 ```bash
-# Set API key
-export OPENAI_API_KEY=sk-your-key-here
-
-# Generate audio
-npm run generate-audio -- --tts-provider openai
+npm install kokoro-js
+node scripts/download-kokoro-models.js
+npm run generate-audio -- --tts-provider kokoro
 ```
 
-**Auto-detect (uses best available)**
+**Auto-detect** (uses best available):
 ```bash
 npm run generate-audio
 ```
@@ -110,6 +112,24 @@ ffmpeg -f concat -safe 0 -i <(for f in public/audio/slide-*.mp3; do echo "file '
 ```
 
 Note: Individual files are already loaded by the presentation, so concatenation is optional.
+
+## Security & API Keys
+
+**NEVER commit API keys to git.** Use environment variables:
+
+```bash
+# Safe: set in shell, never saved to file
+export OPENAI_API_KEY=sk-your-key-here
+npm run generate-audio
+
+# Also safe: create .env.local (which is in .gitignore)
+echo "OPENAI_API_KEY=sk-your-key-here" > .env.local
+npm run generate-audio
+```
+
+The `.env` and `.env.local` files are in `.gitignore` — they will never be committed.
+
+Audio files (`public/audio/*.mp3`) are also in `.gitignore` and should be generated locally by each user or deployment.
 
 ## Presentation Structure
 

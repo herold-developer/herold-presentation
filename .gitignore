@@ -21,4 +21,9 @@ models/
 *.weights
 *.safetensors
 *.bin
+
+# Audio files — generated locally with API keys, never committed
+public/audio/*.mp3
+concat.txt
+.vercel
 .vercel
