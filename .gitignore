@@ -22,8 +22,8 @@ models/
 *.safetensors
 *.bin
 
-# Audio files — generated locally with API keys, never committed
-public/audio/*.mp3
+# Concatenated audio file (generated locally for reference)
+public/audio/herold-presentation.mp3
 concat.txt
 .vercel
 .vercel
