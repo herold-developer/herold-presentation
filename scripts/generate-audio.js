@@ -37,6 +37,9 @@ const DEFAULT_VOICES = {
   openai: 'onyx',
 };
 
+const SLIDE_PAUSE_SECONDS = 0.5
+const SILENCE_FILENAME = `silence-${Math.round(SLIDE_PAUSE_SECONDS * 1000)}ms.mp3`
+
 // Herold presentation narration
 const scriptParts = [
   {
@@ -447,6 +450,50 @@ async function generateAudio(text, filename, provider, voiceId) {
   }
 }
 
+function ensureSilenceClip(audioDir) {
+  const silencePath = path.join(audioDir, SILENCE_FILENAME)
+  if (fs.existsSync(silencePath)) {
+    return silencePath
+  }
+
+  try {
+    execSync(
+      `ffmpeg -y -f lavfi -i anullsrc=r=44100:cl=mono -t ${SLIDE_PAUSE_SECONDS} "${silencePath}"`,
+      {
+        stdio: 'ignore',
+      }
+    )
+    console.log(`✓ Generated ${SILENCE_FILENAME}`)
+    return silencePath
+  } catch (error) {
+    throw new Error('ffmpeg is required to generate silence clips. Please install ffmpeg and try again.')
+  }
+}
+
+function buildConcatenatedTrack(audioDir) {
+  const concatPath = path.join(audioDir, 'concat-list.txt')
+  const lines = []
+
+  scriptParts.forEach((part, index) => {
+    lines.push(`file '${part.filename}'`)
+    if (index < scriptParts.length - 1) {
+      lines.push(`file '${SILENCE_FILENAME}'`)
+    }
+  })
+
+  fs.writeFileSync(concatPath, lines.join('\n'))
+
+  try {
+    execSync(
+      `cd "${audioDir}" && ffmpeg -y -f concat -safe 0 -i concat-list.txt -c copy herold-presentation.mp3`,
+      { stdio: 'ignore' }
+    )
+    console.log('✓ Built public/audio/herold-presentation.mp3')
+  } catch (error) {
+    throw new Error('Failed to concatenate audio files with ffmpeg.')
+  }
+}
+
 async function main() {
   const provider = getProviderToUse(requestedProvider);
   const voiceId = voice || DEFAULT_VOICES[provider];
@@ -473,14 +520,13 @@ async function main() {
       await new Promise(resolve => setTimeout(resolve, 500));
     }
 
+    ensureSilenceClip(audioDir)
+    buildConcatenatedTrack(audioDir)
+
     console.log('\n✅ All audio generated successfully!');
     console.log(`📁 Audio files in: ${audioDir}`);
     console.log(`🎤 Provider: ${TTS_CONFIG[provider].name}`);
-
-    console.log('\n📋 NEXT STEPS:');
-    console.log('1. Concatenate audio files:');
-    console.log('   ffmpeg -f concat -safe 0 -i <(for f in public/audio/slide-*.mp3; do echo "file \'$f\'"; done) -c copy public/audio/herold-presentation.mp3');
-    console.log('\n2. Then run: npm run dev');
+    console.log(`🕒 Added ${SLIDE_PAUSE_SECONDS}s pause between slides`);
   } catch (error) {
     console.error('\n❌ Audio generation failed:', error.message);
     process.exit(1);

@@ -56,7 +56,7 @@ The presentation uses **hybrid TTS** — choose your provider based on your need
 
 **Recommended: OpenAI (Best quality, premium voice)**
 
-Audio files are generated locally — they are **not stored in git**. Generate them on your machine:
+Audio files are generated locally — they are **not stored in git**. Generate them on your machine (the script automatically inserts a 0.5s pause between slides and builds `public/audio/herold-presentation.mp3`):
 
 ```bash
 # Set your OpenAI API key (never commit this)

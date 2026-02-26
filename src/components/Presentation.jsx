@@ -1,7 +1,9 @@
 import { useState, useRef, useEffect } from 'react'
 import './Presentation.css'
 
-const SLIDES = [
+const SLIDE_PAUSE_SECONDS = 0.5
+
+const RAW_SLIDES = [
   {
     id: 1,
     title: "Herold",
@@ -151,6 +153,17 @@ const SLIDES = [
     timeEnd: 250.944,
   },
 ]
+
+const SLIDES = RAW_SLIDES.map((slide, index) => {
+  const pauseBefore = index * SLIDE_PAUSE_SECONDS
+  const pauseAfter = index === RAW_SLIDES.length - 1 ? 0 : SLIDE_PAUSE_SECONDS
+
+  return {
+    ...slide,
+    timeStart: slide.timeStart + pauseBefore,
+    timeEnd: slide.timeEnd + pauseBefore + pauseAfter,
+  }
+})
 
 export default function Presentation() {
   const [currentSlide, setCurrentSlide] = useState(0)
