@@ -1,9 +1,7 @@
 import { useState, useRef, useEffect } from 'react'
 import './Presentation.css'
 
-const SLIDE_PAUSE_SECONDS = 0.5
-
-const RAW_SLIDES = [
+const SLIDES = [
   {
     id: 1,
     title: "My name is Herold",
@@ -139,17 +137,6 @@ const RAW_SLIDES = [
   },
 ]
 
-const SLIDES = RAW_SLIDES.map((slide, index) => {
-  const pauseBefore = index * SLIDE_PAUSE_SECONDS
-  const pauseAfter = index === RAW_SLIDES.length - 1 ? 0 : SLIDE_PAUSE_SECONDS
-
-  return {
-    ...slide,
-    timeStart: slide.timeStart + pauseBefore,
-    timeEnd: slide.timeEnd + pauseBefore + pauseAfter,
-  }
-})
-
 export default function Presentation() {
   const [currentSlide, setCurrentSlide] = useState(0)
   const [isPlaying, setIsPlaying] = useState(false)
@@ -164,22 +151,12 @@ export default function Presentation() {
       const time = audioRef.current.currentTime
       setCurrentTime(time)
 
+      const EPSILON = 0.01
       let slideIndex = SLIDES.findIndex(
-        (slide) => time >= slide.timeStart - 0.05 && time < slide.timeEnd + 0.05
+        (slide) => time >= slide.timeStart - EPSILON && time < slide.timeEnd - EPSILON + (slide.timeEnd === SLIDES[SLIDES.length - 1].timeEnd ? EPSILON : 0)
       )
 
-      if (slideIndex === -1) {
-        for (let i = 0; i < SLIDES.length - 1; i++) {
-          const gapStart = SLIDES[i].timeEnd
-          const gapEnd = SLIDES[i + 1].timeStart
-          if (time >= gapStart && time < gapEnd) {
-            slideIndex = i + 1
-            break
-          }
-        }
-      }
-
-      if (slideIndex === -1 && time >= SLIDES[SLIDES.length - 1].timeEnd) {
+      if (slideIndex === -1 && time >= SLIDES[SLIDES.length - 1].timeEnd - EPSILON) {
         slideIndex = SLIDES.length - 1
       }
 
@@ -217,13 +194,13 @@ export default function Presentation() {
         e.preventDefault()
         if (currentSlide < SLIDES.length - 1) {
           const nextSlide = SLIDES[currentSlide + 1]
-          audioRef.current.currentTime = nextSlide.timeStart + 0.01
+          audioRef.current.currentTime = nextSlide.timeStart + 0.001
         }
       } else if (e.key === 'ArrowLeft') {
         e.preventDefault()
         if (currentSlide > 0) {
           const prevSlide = SLIDES[currentSlide - 1]
-          audioRef.current.currentTime = prevSlide.timeStart + 0.01
+          audioRef.current.currentTime = prevSlide.timeStart + 0.001
         }
       }
     }
