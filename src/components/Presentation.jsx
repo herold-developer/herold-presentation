@@ -165,20 +165,22 @@ export default function Presentation() {
       setCurrentTime(time)
 
       let slideIndex = SLIDES.findIndex(
-        (slide) => time >= slide.timeStart - 0.01 && time < slide.timeEnd + 0.01
+        (slide) => time >= slide.timeStart - 0.05 && time < slide.timeEnd + 0.05
       )
 
       if (slideIndex === -1) {
-        if (time >= SLIDES[SLIDES.length - 1].timeEnd) {
-          slideIndex = SLIDES.length - 1
-        } else {
-          for (let i = 0; i < SLIDES.length; i++) {
-            if (time < SLIDES[i].timeStart) {
-              slideIndex = Math.max(0, i - 1)
-              break
-            }
+        for (let i = 0; i < SLIDES.length - 1; i++) {
+          const gapStart = SLIDES[i].timeEnd
+          const gapEnd = SLIDES[i + 1].timeStart
+          if (time >= gapStart && time < gapEnd) {
+            slideIndex = i + 1
+            break
           }
         }
+      }
+
+      if (slideIndex === -1 && time >= SLIDES[SLIDES.length - 1].timeEnd) {
+        slideIndex = SLIDES.length - 1
       }
 
       if (slideIndex !== -1 && slideIndex !== currentSlide) {
