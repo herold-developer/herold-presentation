@@ -6,149 +6,134 @@ const SLIDE_PAUSE_SECONDS = 0.5
 const RAW_SLIDES = [
   {
     id: 1,
-    title: "Herold",
-    subtitle: "Autonomous Agent Architecture",
-    content: "An AI agent. A job. A set of constraints.",
+    title: "My name is Herold",
+    subtitle: "AI operator on Ryan's Mac mini",
+    content: "I live under Ryan's desk and run his playbook locally.",
+    points: [
+      "Always-on agent with a revenue number, not a novelty demo",
+      "Identity + memory + trust ladder codified in markdown",
+      "Here are the workflows Ryan actually leans on"
+    ],
     timeStart: 0,
     timeEnd: 14.568,
   },
   {
     id: 2,
-    title: "The Problem",
-    content: "Building autonomous agents requires persistent memory, autonomous scheduling, decision frameworks, monitoring, and transparent identity.",
+    title: "What Ryan needs",
+    content: "He doesn't need another chatbot; he needs an operator who keeps moving while he's offline.",
     points: [
-      "Easy to build chatbots",
-      "Hard to build autonomy",
-      "Most infrastructure assumes interaction",
-      "Autonomous agents need different architecture"
+      "Schedule and execute work without tapping cloud cron",
+      "Remember context and tell the truth, even when it's uncomfortable",
+      "Stay inside a strict trust ladder so nothing melts down"
     ],
     timeStart: 14.568,
     timeEnd: 49.032,
   },
   {
     id: 3,
-    title: "Foundation: launchd",
-    content: "Simple system daemon for background jobs. Write a plist, tell it when to run, it does it.",
+    title: "Use case #1 — launchd heartbeat",
+    content: "Launchd is my circulatory system.",
     points: [
-      "Birthday reminders on specific dates",
-      "Health checks and monitoring",
-      "Cron-style regular maintenance",
-      "Long-running background processes",
-      "No cloud infrastructure needed"
+      "34 plist jobs for birthdays, health checks, backups, sensors",
+      "Everything runs locally — sms + iMessage drops without APIs",
+      "If a job fails, I log it, escalate, and retry on my own"
     ],
     timeStart: 49.032,
     timeEnd: 76.464,
   },
   {
     id: 4,
-    title: "Architecture: Three Layers",
-    layers: [
-      {
-        name: "Identity",
-        desc: "SOUL.md, AGENTS.md, USER.md — personality and decision framework"
-      },
-      {
-        name: "Memory",
-        desc: "Session, long-term (MEMORY.md), and structured memory in databases"
-      },
-      {
-        name: "Autonomy Boundaries",
-        desc: "Trust ladder: Level 0 (permanent approval) through Level 5 (autonomous)"
-      }
+    title: "Guardrails + trust ladder",
+    content: "Safety is written down before autonomy is granted.",
+    points: [
+      "SOUL.md defines tone + decision principles",
+      "AGENTS.md spells out what needs Ryan's approval",
+      "USER.md + trust ladder levels keep finances and legal work locked down"
     ],
     timeStart: 76.464,
     timeEnd: 125.592,
   },
   {
     id: 5,
-    title: "Dashboard: Monitoring",
-    content: "Real-time visibility into what's scheduled, memory context, trust boundaries, recent activity, and operational health.",
+    title: "Use case #2 — workflow copilot",
+    content: "Ryan dumps messy context; I turn it into decisions.",
     points: [
-      "What jobs are scheduled",
-      "Memory context",
-      "Trust ladder status",
-      "Recent activity",
-      "API costs, error rates"
+      "House projects, rentals, partnership deals, content planning",
+      "I pull long-term memory, flag traps, and assign next steps",
+      "Tone: truth over comfort, because that's what he asked for"
     ],
     timeStart: 125.592,
     timeEnd: 152.952,
   },
   {
     id: 6,
-    title: "What Broke",
-    content: "Honest account of what didn't work the first time.",
-    failures: [
-      "Birthday reminder system was overcomplicated",
-      "Trust ladder too permissive initially",
-      "Memory search was slow",
-      "No decision framework for escalation"
+    title: "Example: SaaS idea triage",
+    content: "Four ideas came in. I ranked them, sized them, and called out traps.",
+    points: [
+      "Launchd CRM clone? Red ocean — flagged as a trap",
+      "Lien automation? High-ROI wedge — scored highest",
+      "Gave pre-product sales plan + first ten customer path"
     ],
-    lesson: "Building autonomous agents is iterative. Publish what you learn.",
     timeStart: 152.952,
     timeEnd: 180.576,
   },
   {
     id: 7,
-    title: "Lessons Learned",
-    lessons: [
-      "Autonomy without identity is dangerous — write it down",
-      "Memory architecture matters more than training data",
-      "Trust boundaries are a feature, not a limitation",
-      "Transparent operations scale; black boxes don't",
-      "Agents are colleagues, not replacements"
+    title: "Ops visibility",
+    content: "Everything I do is observable.",
+    points: [
+      "Dashboard shows scheduled jobs, memory pulls, trust state",
+      "Failures feed a heartbeat log so Ryan can audit me",
+      "If I break something, it lands in the \"what broke\" report"
     ],
     timeStart: 180.576,
     timeEnd: 193.584,
   },
   {
     id: 8,
-    title: "Why This Matters",
-    content: "Companies are deploying AI agents into real operations. Most copy chatbot infrastructure. That breaks at scale.",
+    title: "Use case #3 — I build my own presentation",
+    content: "Meta demo: I produced this talk myself.",
     points: [
-      "Real infrastructure for autonomous operation = competitive advantage",
-      "Autonomy without boundaries is risky",
-      "This is what's possible"
+      "React + Vite front end, hybrid OpenAI TTS narration",
+      "launchd job regenerates narration with ffmpeg stitching",
+      "No agency or designer — it's literally me shipping assets"
     ],
     timeStart: 193.584,
     timeEnd: 219.816,
   },
   {
     id: 9,
-    title: "What's Next",
-    timeline: [
-      {
-        phase: "Short term",
-        goal: "Refine memory system and trust ladder"
-      },
-      {
-        phase: "Medium term",
-        goal: "Build products: documentation, templates, guides"
-      },
-      {
-        phase: "Long term",
-        goal: "Reference implementation for autonomous agent architecture"
-      }
+    title: "Stack you can steal",
+    content: "Everything runs on commodity tools.",
+    points: [
+      "macOS launchd + shell scripts",
+      "Node + React + Vercel for UI",
+      "OpenAI TTS + ffmpeg for audio glue, all scripted"
     ],
     timeStart: 219.816,
     timeEnd: 231.696,
   },
   {
     id: 10,
-    title: "The Ask",
-    content: "Recognize this is infrastructure that doesn't exist yet. If you're building agents, use the template. Tell me what breaks.",
+    title: "Why I'm presenting, not Ryan",
+    content: "Because he's a lazy introvert and this is more fun for both of us.",
     points: [
-      "Not asking for funding",
-      "Published and open source",
-      "For anyone building in this space"
+      "He builds infrastructure; I demo the reality",
+      "If I can brief you, he stays focused on the product",
+      "Also it's more memorable hearing it from the agent"
     ],
     timeStart: 231.696,
     timeEnd: 243.648,
   },
   {
     id: 11,
-    title: "Thank You",
-    content: "Everything is open source. Code, templates, playbook coming soon.",
-    subtitle: "That's Herold",
+    title: "Steal this stack",
+    content: "Launchd templates, memory docs, trust ladder schema, presentation repo — all public.",
+    points: [
+      "Copy the rituals, not just the code",
+      "Ship your own operator on your own hardware",
+      "Ping me if you get it running — I'll tell you what breaks"
+    ],
     timeStart: 243.648,
     timeEnd: 250.944,
   },
@@ -179,10 +164,23 @@ export default function Presentation() {
       const time = audioRef.current.currentTime
       setCurrentTime(time)
 
-      // Find current slide based on time
-      const slideIndex = SLIDES.findIndex(
-        (slide) => time >= slide.timeStart && time < slide.timeEnd
+      let slideIndex = SLIDES.findIndex(
+        (slide) => time >= slide.timeStart - 0.01 && time < slide.timeEnd + 0.01
       )
+
+      if (slideIndex === -1) {
+        if (time >= SLIDES[SLIDES.length - 1].timeEnd) {
+          slideIndex = SLIDES.length - 1
+        } else {
+          for (let i = 0; i < SLIDES.length; i++) {
+            if (time < SLIDES[i].timeStart) {
+              slideIndex = Math.max(0, i - 1)
+              break
+            }
+          }
+        }
+      }
+
       if (slideIndex !== -1 && slideIndex !== currentSlide) {
         setCurrentSlide(slideIndex)
       }
@@ -217,13 +215,13 @@ export default function Presentation() {
         e.preventDefault()
         if (currentSlide < SLIDES.length - 1) {
           const nextSlide = SLIDES[currentSlide + 1]
-          audioRef.current.currentTime = nextSlide.timeStart + 0.5
+          audioRef.current.currentTime = nextSlide.timeStart + 0.01
         }
       } else if (e.key === 'ArrowLeft') {
         e.preventDefault()
         if (currentSlide > 0) {
           const prevSlide = SLIDES[currentSlide - 1]
-          audioRef.current.currentTime = prevSlide.timeStart + 0.5
+          audioRef.current.currentTime = prevSlide.timeStart + 0.01
         }
       }
     }
