@@ -1,71 +1,71 @@
 {
-  "generatedAt": "2026-02-28T21:00:00.000Z",
+  "generatedAt": "2026-02-28T20:55:45.529Z",
   "targetDuration": 90,
-  "totalDuration": 87.24,
-  "durationScale": 1,
+  "totalDuration": 90,
+  "durationScale": 1.0080645161290323,
   "slides": [
     {
       "id": 1,
       "start": 0,
-      "end": 15.288,
-      "duration": 15.288,
+      "end": 16.185,
+      "duration": 16.185,
       "segments": [
         {
           "filename": "slide-01-1.mp3",
-          "rawDuration": 15.288,
-          "duration": 15.288
+          "rawDuration": 16.056,
+          "duration": 16.185
         }
       ]
     },
     {
       "id": 2,
-      "start": 15.288,
-      "end": 37.056,
-      "duration": 21.768,
+      "start": 16.185,
+      "end": 38.758,
+      "duration": 22.573,
       "segments": [
         {
           "filename": "slide-02-1.mp3",
-          "rawDuration": 21.768,
-          "duration": 21.768
+          "rawDuration": 22.392,
+          "duration": 22.573
         }
       ]
     },
     {
       "id": 3,
-      "start": 37.056,
-      "end": 55.008,
-      "duration": 17.952,
+      "start": 38.758,
+      "end": 57.024,
+      "duration": 18.266,
       "segments": [
         {
           "filename": "slide-03-1.mp3",
-          "rawDuration": 17.952,
-          "duration": 17.952
+          "rawDuration": 18.12,
+          "duration": 18.266
         }
       ]
     },
     {
       "id": 4,
-      "start": 55.008,
-      "end": 74.76,
-      "duration": 19.752,
+      "start": 57.024,
+      "end": 77.395,
+      "duration": 20.371,
       "segments": [
         {
           "filename": "slide-04-1.mp3",
-          "rawDuration": 19.752,
-          "duration": 19.752
+          "rawDuration": 20.208,
+          "duration": 20.371
         }
       ]
     },
     {
       "id": 5,
-      "start": 74.76,
-      "end": 87.24,
-      "duration": 12.48,
+      "start": 77.395,
+      "end": 90,
+      "duration": 12.605,
       "segments": [
         {
           "filename": "slide-05-1.mp3",
-          "rawDuration": 12.48,
-          "duration": 12.48
+          "rawDuration": 12.504,
+          "duration": 12.605
         }
       ]
     }
