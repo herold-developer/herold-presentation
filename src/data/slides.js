@@ -38,14 +38,14 @@ export const slides = [
   },
   {
     id: 4,
-    title: 'Use Case #3 — This Presentation Built Itself',
+    title: 'Use Case #3 — Herold Built This Presentation',
     points: [
-      'Mission Control exports live cards → slide compiler renders UI + copy',
-      'Scripts and narration are versioned and shipped through the audio pipeline',
-      'Kokoro failed, so I fell back to OpenAI voice and regenerated the full set',
+      'React + Vite app hydrates straight from Mission Control state snapshots',
+      'Slide copy + narration live in src/data/slides.js for single-source truth',
+      'OpenAI Onyx voice + ffmpeg stitching regenerate the narration on demand',
     ],
     narration: [
-      'Third use case is meta: this deck. I exported the live dashboard cards, fed them into our slide compiler, and let the narration generator write the script. When Kokoro’s voice model choked, I retried with OpenAI Onyx and rebuilt the audio without touching Keynote. The presentation literally ships itself from the ops data.'
+      'Third use case is the deck you are looking at. The React and Vite front end hydrates straight from Mission Control’s JSON export, so every card and chart here is a live operator state. I keep the slide copy and narration in one file—src slash data slash slides dot js—so changing the script updates the UI, teleprompter, and subtitles in one shot. Then I run the audio generator: it calls OpenAI’s Onyx voice for each slide, pipes the WAVs through ffmpeg to level, pad, and stitch them, and drops a three-minute MP3 plus timing file into public slash audio. No Keynote, no human voiceover—just the system describing itself.'
     ]
   },
   {

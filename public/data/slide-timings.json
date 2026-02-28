@@ -1,71 +1,71 @@
 {
-  "generatedAt": "2026-02-28T20:55:45.529Z",
+  "generatedAt": "2026-02-28T21:07:53.722Z",
   "targetDuration": 90,
   "totalDuration": 90,
-  "durationScale": 1.0080645161290323,
+  "durationScale": 0.8468834688346883,
   "slides": [
     {
       "id": 1,
       "start": 0,
-      "end": 16.185,
-      "duration": 16.185,
+      "end": 12.825,
+      "duration": 12.825,
       "segments": [
         {
           "filename": "slide-01-1.mp3",
-          "rawDuration": 16.056,
-          "duration": 16.185
+          "rawDuration": 15.144,
+          "duration": 12.825
         }
       ]
     },
     {
       "id": 2,
-      "start": 16.185,
-      "end": 38.758,
-      "duration": 22.573,
+      "start": 12.825,
+      "end": 31.687,
+      "duration": 18.862,
       "segments": [
         {
           "filename": "slide-02-1.mp3",
-          "rawDuration": 22.392,
-          "duration": 22.573
+          "rawDuration": 22.272,
+          "duration": 18.862
         }
       ]
     },
     {
       "id": 3,
-      "start": 38.758,
-      "end": 57.024,
-      "duration": 18.266,
+      "start": 31.687,
+      "end": 46.931,
+      "duration": 15.244,
       "segments": [
         {
           "filename": "slide-03-1.mp3",
-          "rawDuration": 18.12,
-          "duration": 18.266
+          "rawDuration": 18,
+          "duration": 15.244
         }
       ]
     },
     {
       "id": 4,
-      "start": 57.024,
-      "end": 77.395,
-      "duration": 20.371,
+      "start": 46.931,
+      "end": 79.35,
+      "duration": 32.419,
       "segments": [
         {
           "filename": "slide-04-1.mp3",
-          "rawDuration": 20.208,
-          "duration": 20.371
+          "rawDuration": 38.28,
+          "duration": 32.419
         }
       ]
     },
     {
       "id": 5,
-      "start": 77.395,
+      "start": 79.35,
       "end": 90,
-      "duration": 12.605,
+      "duration": 10.65,
       "segments": [
         {
           "filename": "slide-05-1.mp3",
-          "rawDuration": 12.504,
-          "duration": 12.605
+          "rawDuration": 12.576,
+          "duration": 10.65
         }
       ]
     }
