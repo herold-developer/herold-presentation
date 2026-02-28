@@ -1,149 +1,71 @@
 {
-  "generatedAt": "2026-02-28T03:30:55.539Z",
-  "targetDuration": 180,
-  "totalDuration": 180,
-  "durationScale": 1.0816267666570523,
+  "generatedAt": "2026-02-28T20:28:09.533Z",
+  "targetDuration": 90,
+  "totalDuration": 90,
+  "durationScale": 1.0754229997132205,
   "slides": [
     {
       "id": 1,
       "start": 0,
-      "end": 13.992,
-      "duration": 13.992,
+      "end": 8.182,
+      "duration": 8.182,
       "segments": [
         {
           "filename": "slide-01-1.mp3",
-          "rawDuration": 12.936,
-          "duration": 13.992
+          "rawDuration": 7.608,
+          "duration": 8.182
         }
       ]
     },
     {
       "id": 2,
-      "start": 13.992,
-      "end": 31.618,
-      "duration": 17.626,
+      "start": 8.182,
+      "end": 40.78,
+      "duration": 32.598,
       "segments": [
         {
           "filename": "slide-02-1.mp3",
-          "rawDuration": 16.296,
-          "duration": 17.626
+          "rawDuration": 30.312,
+          "duration": 32.598
         }
       ]
     },
     {
       "id": 3,
-      "start": 31.618,
-      "end": 48.154,
-      "duration": 16.536,
+      "start": 40.78,
+      "end": 60.731,
+      "duration": 19.951,
       "segments": [
         {
           "filename": "slide-03-1.mp3",
-          "rawDuration": 15.288,
-          "duration": 16.536
+          "rawDuration": 18.552,
+          "duration": 19.951
         }
       ]
     },
     {
       "id": 4,
-      "start": 48.154,
-      "end": 66.118,
-      "duration": 17.964,
+      "start": 60.731,
+      "end": 75.495,
+      "duration": 14.763,
       "segments": [
         {
           "filename": "slide-04-1.mp3",
-          "rawDuration": 16.608,
-          "duration": 17.964
+          "rawDuration": 13.728,
+          "duration": 14.763
         }
       ]
     },
     {
       "id": 5,
-      "start": 66.118,
-      "end": 83.458,
-      "duration": 17.341,
+      "start": 75.495,
+      "end": 90,
+      "duration": 14.505,
       "segments": [
         {
           "filename": "slide-05-1.mp3",
-          "rawDuration": 16.032,
-          "duration": 17.341
-        }
-      ]
-    },
-    {
-      "id": 6,
-      "start": 83.458,
-      "end": 103.187,
-      "duration": 19.729,
-      "segments": [
-        {
-          "filename": "slide-06-1.mp3",
-          "rawDuration": 18.24,
-          "duration": 19.729
-        }
-      ]
-    },
-    {
-      "id": 7,
-      "start": 103.187,
-      "end": 119.931,
-      "duration": 16.744,
-      "segments": [
-        {
-          "filename": "slide-07-1.mp3",
-          "rawDuration": 15.48,
-          "duration": 16.744
-        }
-      ]
-    },
-    {
-      "id": 8,
-      "start": 119.931,
-      "end": 134.676,
-      "duration": 14.745,
-      "segments": [
-        {
-          "filename": "slide-08-1.mp3",
-          "rawDuration": 13.632,
-          "duration": 14.745
-        }
-      ]
-    },
-    {
-      "id": 9,
-      "start": 134.676,
-      "end": 149.55,
-      "duration": 14.875,
-      "segments": [
-        {
-          "filename": "slide-09-1.mp3",
-          "rawDuration": 13.752,
-          "duration": 14.875
-        }
-      ]
-    },
-    {
-      "id": 10,
-      "start": 149.55,
-      "end": 164.918,
-      "duration": 15.368,
-      "segments": [
-        {
-          "filename": "slide-10-1.mp3",
-          "rawDuration": 14.208,
-          "duration": 15.368
-        }
-      ]
-    },
-    {
-      "id": 11,
-      "start": 164.918,
-      "end": 180,
-      "duration": 15.082,
-      "segments": [
-        {
-          "filename": "slide-11-1.mp3",
-          "rawDuration": 13.944,
-          "duration": 15.082
+          "rawDuration": 13.488,
+          "duration": 14.505
         }
       ]
     }

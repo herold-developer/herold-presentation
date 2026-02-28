@@ -34,7 +34,7 @@ const TTS_CONFIG = {
 // CONFIGURATION
 // ============================================================================
 
-const TARGET_DURATION_SECONDS = 180
+const TARGET_DURATION_SECONDS = 90
 
 const DEFAULT_VOICES = {
   kokoro: 'af_bella',
