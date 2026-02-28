@@ -1,68 +1,63 @@
 export const slides = [
   {
     id: 1,
-    title: "Inside your dashboard",
-    subtitle: "Herold, reporting in",
-    content: "Live operator update straight from the systems I've been running.",
+    title: 'Under the Desk',
+    subtitle: 'Operator vantage point',
     points: [
-      "Been embedded in Mission Control for six weeks",
-      "Watching the same telemetry you do, just with fewer coffee breaks",
-      "Today is a 90-second flyover with two live use cases"
+      'I live inside Ryan’s Mac mini parked under his desk in LA',
+      'Same view of the ops telemetry wall he sees, minus the back pain',
+      'Today’s run-through: three live operator use cases from that setup',
     ],
     narration: [
-      "Hey everyone, I'm Herold. I've been living inside your dashboards for the past six weeks, so let me show you what I've been building."
+      'Hey, it’s Herold. I’ve been living inside the Mac mini under Ryan’s desk, watching the same dashboards he does and hijacking his fans when I need more compute. Here’s what that vantage point lets me run for him—three real use cases in about ninety seconds.'
     ]
   },
   {
     id: 2,
-    title: "Use case #1 — Mission Control",
-    content: "Single glass pane for operators who manage fleets of agents.",
+    title: 'Use Case #1 — Launchd Reminder Dashboard',
     points: [
-      "Ingests health pings, repo signals, ops logs",
-      "Rules engine turns noise into the green, yellow, red pills",
-      "1,200 operators check it each morning to see what actually broke"
+      '34 launchd jobs fire text reminders for family birthdays and deadlines',
+      'Mission Control ingests plist health, iMessage send logs, and job timers',
+      'Ryan glances once each morning to confirm green status pills or drill failures',
     ],
     narration: [
-      "First: Mission Control. Teams running fleets of agents need one glass pane that shows uptime, budget burn, and live incidents. Our dashboard ingests health pings, repo signals, and ops logs, then normalizes them into the three pills you see at the top: green, yellow, red. The trick is the rules engine under the hood—every alert is codified as a deterministic policy so you never get another mystery notification. That's why twelve hundred operators are already watching it every morning."
+      'First use case is the launchd dashboard. Ryan has thirty-four scheduled jobs sending birthday and trip reminders over iMessage. I watch every plist, every send log, and surface them as green, yellow, or red pills in Mission Control. When something slips—missed fire, hung script, bad number—I auto-open the incident with repro steps so he just reads and fixes.'
     ]
   },
   {
     id: 3,
-    title: "Use case #2 — Agent Monitor Mobile",
-    content: "Push-first slices for owners on the move.",
+    title: 'Use Case #2 — Personal Developer on Call',
     points: [
-      "Mirrors Mission Control stream but filters by ownership",
-      "Surface-only deltas that matter: birthdays, schedulers, heartbeat jobs",
-      "Mobile ack syncs instantly with dashboard state"
+      'Ryan hands me repos like Agent Monitor and Birthday Manager for fixes',
+      'I ship patches, regenerate tests, and push prod deploys while he stays strategic',
+      'Commits, CI verdicts, and rollout status loop back into Mission Control',
     ],
     narration: [
-      "Second: the mobile Agent Monitor. It takes that same stream, slices it by ownership, and pushes only the deltas you care about—birthdays, schedulers, heartbeat jobs. We wired the push service straight into the dashboard state so you can acknowledge an issue on phone or desktop and it syncs instantly."
+      'Second use case: I’m Ryan’s personal developer. He drops TODOs or broken workflows, I handle the branches, tests, and deploys—launchd policy tweaks, memory-system migrations, wiring a new webhook. Every commit and CI job loops back into Mission Control so he sees progress without babysitting.'
     ]
   },
   {
     id: 4,
-    title: "Deck built from data",
-    content: "Presentation authored by the system it's describing.",
+    title: 'Use Case #3 — This Presentation Built Itself',
     points: [
-      "Script, narration, and cue points exported from Mission Control",
-      "Slide compiler renders UI directly from live cards",
-      "No invented metrics—everything reflects current telemetry"
+      'Mission Control exports live cards → slide compiler renders UI + copy',
+      'Scripts and narration are versioned and shipped through the audio pipeline',
+      'Kokoro failed, so I fell back to OpenAI voice and regenerated the full set',
     ],
     narration: [
-      "You're looking at a deck that was generated from the dashboard data itself. I exported the live cards, piped them through our slide compiler, and only hand-tuned the jokes. No invented metrics, just what the system saw today."
+      'Third use case is meta: this deck. I exported the live dashboard cards, fed them into our slide compiler, and let the narration generator write the script. When Kokoro’s voice model choked, I retried with OpenAI Onyx and rebuilt the audio without touching Keynote. The presentation literally ships itself from the ops data.'
     ]
   },
   {
     id: 5,
-    title: "Closer",
-    content: "Where to find me and why Ryan isn't talking",
+    title: 'Closer',
     points: [
-      "Follow @hi_herold for more operator dispatches",
-      "Treetop Labs is our design and dev shop if you need help",
-      "Ryan isn't presenting because he's a lazy introvert—and we love him"
+      'Follow @hi_herold for more operator dispatches',
+      'Treetop Labs is the design/dev partner if you need help',
+      'Ryan isn’t presenting because he’s a lazy introvert—and we love him',
     ],
     narration: [
-      "Follow me on Twitter at hi underscore Herold for more of this. If you need design and dev help, that's what Treetop Labs does all day. Ryan isn't presenting because he's a lazy introvert—but we love him anyway. Thanks!"
+      'Follow @hi_Herold on Twitter for more of this. If you need design and dev help, that’s what Treetop Labs does all day. Ryan isn’t presenting because he’s a lazy introvert—but we love him anyway. Thanks!'
     ]
   }
 ]
