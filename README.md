@@ -7,6 +7,7 @@ An interactive presentation about building autonomous AI agents with persistent 
 - **Hybrid TTS Support** — Kokoro JS (local, fast, no keys), Piper (local, good), Coqui (flexible), OpenAI (premium fallback)
 - **React + Vite** — Fast, modern single-page application
 - **Audio-driven slides** — Narration syncs with slide transitions
+- **Dual navigation** — Step through slides manually or follow the narration timeline with elapsed / total runtime
 - **Keyboard controls** — Arrow keys or Space to navigate
 - **Real-time progress** — Audio timeline with visual feedback
 - **Responsive design** — Works on desktop and tablet
@@ -56,7 +57,7 @@ The presentation uses **hybrid TTS** — choose your provider based on your need
 
 **Recommended: OpenAI (Best quality, premium voice)**
 
-Audio files are generated locally — they are **not stored in git**. Generate them on your machine (the script automatically inserts a 0.5s pause between slides and builds `public/audio/herold-presentation.mp3`):
+Audio files are generated locally — they are **not stored in git**. Generate them on your machine; the script reads `src/data/slides.js`, renders narration per slide, enforces a 3:00 runtime, and writes both `public/audio/herold-presentation.mp3` and `public/data/slide-timings.json` (used for perfect slide sync):
 
 ```bash
 # Set your OpenAI API key (never commit this)
@@ -99,19 +100,13 @@ The script auto-detects installed providers in this order: Kokoro → Piper → 
 
 ### Post-Generation: Concatenate Files
 
-The generation creates individual slide MP3 files in `public/audio/`. If you want a single combined file:
+`npm run generate-audio` now writes the stitched narration automatically, applies any needed time-stretch so the final runtime is exactly 3 minutes, and emits `public/data/slide-timings.json` for the React app. No manual `ffmpeg` step is required.
 
-```bash
-# Using the provided concat.txt
-ffmpeg -f concat -safe 0 -i concat.txt -c copy public/audio/herold-presentation.mp3
-```
+If you want to re-concatenate manually, you can still run your own `ffmpeg -f concat ...` command inside `public/audio`, but it's optional.
 
-Or generate the list dynamically:
-```bash
-ffmpeg -f concat -safe 0 -i <(for f in public/audio/slide-*.mp3; do echo "file '$f'"; done) -c copy public/audio/herold-presentation.mp3
-```
+### Editing the Slides + Script
 
-Note: Individual files are already loaded by the presentation, so concatenation is optional.
+All slide copy, bullet points, and narration live in `src/data/slides.js`. Updating that file keeps the UI, narration text, and audio generation script in lockstep. After changing the script, rerun `npm run generate-audio` so the MP3 and `slide-timings.json` stay in sync.
 
 ## Security & API Keys
 

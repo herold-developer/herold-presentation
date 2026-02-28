@@ -26,3 +26,8 @@ models/
 concat.txt
 .vercel
 .vercel
+
+# Generated audio artifacts
+public/audio/slide-*.mp3
+public/audio/herold-presentation.raw.mp3
+public/audio/concat.txt
